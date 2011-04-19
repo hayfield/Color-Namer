@@ -96,7 +96,11 @@ var Namer = {
         Converts an integer to hex
     */
     toHex: function( val ){
-        return val.toString(16);
+        var str = val.toString(16);
+        if( str.length === 1 ){
+            str = '0' + str;
+        }
+        return str;
     },
     
     /**
@@ -110,12 +114,59 @@ var Namer = {
         Visually displays the RGB values provided
     */
     displayRGB: function( rgba ){
+        //update the RGB bars
         $('#redBarVal').width( Namer.convertToPX( rgba.r ) + 'px' );
         $('#greenBarVal').width( Namer.convertToPX( rgba.g ) + 'px' );
         $('#blueBarVal').width( Namer.convertToPX( rgba.b ) + 'px' );
         $('#redValue').text( rgba.r );
         $('#greenValue').text( rgba.g );
         $('#blueValue').text( rgba.b );
+        //update the colour name and display the actual / calculated colours
+        var colorHex = Namer.determineNamedColourHex( rgba );
+        $('#colorName').text( Namer.getNameOfColour( colorHex ) );
+        $('#actualColor').css( 'background-color', '#' + Namer.RGBToHex( rgba.r, rgba.g, rgba.b ) );
+        $('#calculatedColor').css( 'background-color', '#' + colorHex );
+    },
+        
+    /**
+        Works out the nearest hex value that has been named
+        
+        Imagines the rgb values in a 3D space and finds the named colour that is nearest
+    */
+    determineNamedColourHex: function( rgba ){
+        var actualPoint = rgba;
+        var nearestDistance = 33554432;
+        var comparisonPoint = {};
+        var distance = 33554432;
+        var nearestHex = "";
+        $.each(colors, function(key, val) {
+            comparisonPoint.r = val.r;
+            comparisonPoint.g = val.g;
+            comparisonPoint.b = val.b;
+            distance = Namer.distanceBetweenPoints( actualPoint, comparisonPoint );
+            if( distance < nearestDistance ){
+                nearestDistance = distance;
+                nearestHex = key;
+            }
+        });
+        return nearestHex;
+    },
+    
+    /**
+        Returns the name of the colour which has the specified hex value.
+        
+        Assumes that a check has already been made to ensure it is a valid value.
+    */
+    getNameOfColour: function( hex ){
+        return colors[hex].name;
+    },
+    
+    /**
+        Finds the distance between two points in (r, g, b) space rather than (x, y, z)
+        Used 3D pythagorus
+    */
+    distanceBetweenPoints: function( pt1, pt2 ){
+        return Math.sqrt( (pt1.r-pt2.r)*(pt1.r-pt2.r) + (pt1.g-pt2.g)*(pt1.g-pt2.g) + (pt1.b-pt2.b)*(pt1.b-pt2.b) );
     },
     
     /**

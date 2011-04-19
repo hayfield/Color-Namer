@@ -14,7 +14,7 @@ body {
     left: 0;
     background-color: #888888;
     z-index: 3;
-    width: 120px;
+    width: 150px;
 }
 
 .colorIndicator {
@@ -49,4 +49,8 @@ body {
 
 #blueBarVal {
     background-color: #0000FF;
+}
+
+.colorIndicator {
+    width: 30px;
 }
