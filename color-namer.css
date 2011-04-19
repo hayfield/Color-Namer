@@ -72,8 +72,9 @@ body {
 
 #fileSelectInput {
     width: 100%;
-    position: relative;
-	text-align: right;
+	margin: auto;
+    position: static;
+    text-align: center;
 	z-index: 2;
 }
 
