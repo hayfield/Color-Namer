@@ -5,3 +5,48 @@ body {
 #mainCanvas {
     border: 1px solid black;
 }
+
+/* The RGB box */
+
+#rgbBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #888888;
+    z-index: 3;
+    width: 120px;
+}
+
+.colorIndicator {
+    width: 100%;
+}
+
+.colorLetter {
+    float: left;
+}
+
+.colorVal {
+    float: right;
+}
+
+.colorBar {
+    width: 50px;
+    height: 10px;
+}
+
+.colorBarVal {
+    width: 0%;
+    height:100%;
+}
+
+#redBarVal {
+    background-color: #FF0000;
+}
+
+#greenBarVal {
+    background-color: #00FF00;
+}
+
+#blueBarVal {
+    background-color: #0000FF;
+}

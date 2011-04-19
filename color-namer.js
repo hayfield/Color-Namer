@@ -85,7 +85,6 @@ var Namer = {
     */
     onClick: function( e ){
         var coords = Namer.getMouseClickCoordinates( e );
-        console.log("djhsdfjkdshfkdshfksdhfds fkdjsfh kdsjfh sdkjfhs dkjfhds ");
         console.log("coords:", coords.x, coords.y );
         var rgba = Namer.getRGBA( coords.x, coords.y );
         console.log("rgba", rgba.r, rgba.g, rgba.b, rgba.a);
