@@ -21,6 +21,13 @@ var Namer = {
     drawImage: function( filePath ){
         var img = new Image();
         img.onload = function(){
+            // scale the canvas to fit the image
+            var width = img.width > document.width ? img.width : document.width;
+            var height = img.height > document.height ? img.height : document.height;
+            canvas.width = width;
+            canvas.height = height;
+            console.log( img.width, img.height, document.width, document.height, width, height );
+            // draw the image
             context.drawImage(img, 0, 0);
         };
         img.src = filePath;
@@ -45,7 +52,7 @@ var Namer = {
                 var imgData = context.getImageData(x, y, 1, 1);
             } 						 
         } catch (e) {
-          throw new Error("unable to access image data: " + e)
+            throw new Error("unable to access image data: " + e);
         }
         
         var pixel = imgData.data;
@@ -204,8 +211,6 @@ var Namer = {
         $('#rgbBox').draggable();
         canvas = document.getElementById("mainCanvas");
         context = canvas.getContext("2d");
-        canvas.width = document.width;
-        canvas.height = document.height;
         Namer.updateColourSet();
         
         canvas.addEventListener("mousemove", Namer.updateColorInfo, false);
