@@ -232,13 +232,21 @@ var Namer = {
         // allow a web-based URL to be used to specify the image
         $('#webImageURLInput').keyup(function(e){
             // http://stackoverflow.com/questions/169625/regex-to-check-if-valid-url-that-ends-in-jpg-png-or-gif
-             var regex = new RegExp("^https?://(?:[a-z\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpg|gif|png)$");
-             //var regex = new RegExp("(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?");
-             if( $(this).val().match(regex) || e.keyCode === 13 ){ //if regex match or user pressed enter
-                Namer.drawImage( $(this).val() ); //attempt to load and draw the image with the given URL
-             } else {
-                console.log("fail");
-             }
+            var regex = new RegExp("^https?://(?:[a-z\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpg|gif|png)$");
+            //var regex = new RegExp("(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?");
+            try {
+                if( e.keyCode === 13 || $(this).val().match(regex) ){ //if user pressed enter or regex match
+                    Namer.drawImage( $(this).val() ); //attempt to load and draw the image with the given URL
+                }					 
+            } catch (e) {
+                // allow it to pass if hitting enter and the issue's related to a FF4 issue regarding regexps
+                if(e instanceof InternalError && e.message.indexOf("regular expression too complex") !== -1 && e.keyCode === 13 ){
+                    Namer.drawImage( $(this).val() );                  
+                } else {
+                    throw new Error("unable to load image from URL");
+                }                
+            }
+             
         }).focus(function() {
             //highlight the Sharing Code when it's box gets focus
             //in Chrome / Safari, you need to drag the mouse slightly when you click for it to highlight
