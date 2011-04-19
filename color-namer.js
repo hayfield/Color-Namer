@@ -184,6 +184,7 @@ var Namer = {
         Initialises the color namer
     */
     init: function(){
+        $('#rgbBox').draggable();
         canvas = document.getElementById("mainCanvas");
         context = canvas.getContext("2d");
         canvas.width = document.width;
