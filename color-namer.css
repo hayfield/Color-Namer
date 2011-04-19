@@ -64,6 +64,27 @@ body {
     float: right;
 }
 
+/* http://www.quirksmode.org/dom/inputfile.html */
+
+#fileSelectContainer {
+    position: relative;
+}
+
+#fileSelectInput {
+    width: 100%;
+    position: relative;
+	text-align: right;
+	z-index: 2;
+}
+
+#fakeFileSelectButton {
+    display: none;
+}
+
 #fileSelectButton {
     width: 100%;
+    position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
 }
