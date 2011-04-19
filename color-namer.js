@@ -230,17 +230,20 @@ var Namer = {
         });
         
         // allow a web-based URL to be used to specify the image
-        //$('#webImageURLInput').keyup(function(){
+        $('#webImageURLInput').keyup(function(e){
             // http://stackoverflow.com/questions/169625/regex-to-check-if-valid-url-that-ends-in-jpg-png-or-gif
-            // var regex = (?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?;
-            // if( $(this).val().match
-
-        //    Namer.drawImage( $(this).val() );
-        //}).focus(function() {
+             var regex = new RegExp("^https?://(?:[a-z\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpg|gif|png)$");
+             //var regex = new RegExp("(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?");
+             if( $(this).val().match(regex) || e.keyCode === 13 ){ //if regex match or user pressed enter
+                Namer.drawImage( $(this).val() ); //attempt to load and draw the image with the given URL
+             } else {
+                console.log("fail");
+             }
+        }).focus(function() {
             //highlight the Sharing Code when it's box gets focus
             //in Chrome / Safari, you need to drag the mouse slightly when you click for it to highlight
-		//	$(this).select();
-		//});
+			$(this).select();
+		});
     },
     
     /**
