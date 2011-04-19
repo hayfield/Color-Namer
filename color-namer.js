@@ -112,14 +112,6 @@ var Namer = {
     },
     
     /**
-        Called when a click event occurs
-    */
-    onClick: function( e ){
-        Namer.updateColorInfo( e );
-    },
-
-    
-    /**
         Initialises the color namer
     */
     init: function(){
@@ -127,7 +119,7 @@ var Namer = {
         context = canvas.getContext("2d");
         canvas.width = document.width;
         canvas.height = document.height;
-        canvas.addEventListener("click", Namer.onClick, false);
+        canvas.addEventListener("mousemove", Namer.updateColorInfo, false);
         Namer.drawImage("img.png");
     }
 
