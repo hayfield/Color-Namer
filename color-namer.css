@@ -55,3 +55,7 @@ body {
 .colorIndicator {
     width: 30px;
 }
+
+#fileSelectButton {
+    width: 100%;
+}

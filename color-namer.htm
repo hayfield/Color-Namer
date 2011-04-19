@@ -50,6 +50,12 @@
                 </select>
             </td>
         </tr>
+        <tr>
+            <td colspan="4" id="fileSelectCell">
+                <input type="file" id="fileSelectInput" accept="image/*" onchange="Namer.handleFiles(this.files)" style="display:none;">
+                <button type="button" id="fileSelectButton" onclick="document.getElementById('fileSelectInput').click()">Select Image</button>
+            </td>
+        </tr>
     </table>
   </div>
 </body> 

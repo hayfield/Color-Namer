@@ -20,10 +20,10 @@ var Namer = {
     */
     drawImage: function( filePath ){
         var img = new Image();
-        img.src = filePath;
-        img.onload = function() {
+        img.onload = function(){
             context.drawImage(img, 0, 0);
         };
+        img.src = filePath;
     },
     
     /**
@@ -207,6 +207,30 @@ var Namer = {
                     colors = xkcdtop949;
             }
         });
+    },
+    
+    /**
+        Handles files when a file is selected using the file select input
+        
+        https://developer.mozilla.org/en/using_files_from_web_applications
+        https://developer.mozilla.org/en/DOM/FileReader
+    */
+    handleFiles: function(files){
+        for(var i = 0; i < files.length; i++){
+            var file = files[i];
+            var imageType = /image.*/;
+            
+            if (!file.type.match(imageType)) {
+              continue;
+            }
+          
+            var reader = new FileReader();
+            reader.onload = function(e){
+                Namer.drawImage( e.target.result );
+                console.log("loaded");
+            };
+            reader.readAsDataURL(file);
+          }
     }
 
 };
