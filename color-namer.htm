@@ -5,6 +5,7 @@
 <script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
 <script type='text/javascript' src="jquery-ui-1.8.11.draggable.min.js"></script>
 <script type='text/javascript' src="colors/xkcdtop949.js"></script>
+<script type='text/javascript' src="colors/x11colors.js"></script>
 <script type='text/javascript' src="color-namer.js"></script> 
 <link rel="stylesheet" type="text/css" href="color-namer.css"> 
 <title>Color Namer</title> 
@@ -39,6 +40,15 @@
         </tr>
         <tr>
             <td colspan="3" id="colorName"></td>
+        </tr>
+        <tr>
+            <td colspan="2" id="colorSetLabel">Colors:</td>
+            <td colspan="2" id="colorSetSelectCell">
+                <select id="colorSet">
+                    <option value="xkcdtop949">XKCD Top 949</option>
+                    <option value="x11colors">X11 Windows 144</option>
+                </select>
+            </td>
         </tr>
     </table>
   </div>

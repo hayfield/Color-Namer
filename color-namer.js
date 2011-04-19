@@ -189,9 +189,24 @@ var Namer = {
         context = canvas.getContext("2d");
         canvas.width = document.width;
         canvas.height = document.height;
-        colors = xkcdtop949;
+        colors = x11colors;
         canvas.addEventListener("mousemove", Namer.updateColorInfo, false);
         Namer.drawImage("img.png");
+        
+        // allow the set of colours being used to be changed
+        $('#colorSet').change(function(){
+            var selected = $('#colorSet').val();
+            switch( selected ){
+                case "xkcdtop949":
+                    colors = xkcdtop949;
+                    break;
+                case "x11colors":
+                    colors = x11colors;
+                    break;
+                default:
+                    colors = xkcdtop949;
+            }
+        });
     }
 
 };
