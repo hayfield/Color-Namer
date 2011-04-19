@@ -51,6 +51,12 @@
             </td>
         </tr>
         <tr>
+            <td id="webImageLabel">URL:</td>
+            <td colspan="3" id="webImageCell">
+                <input type="text" name="webImageURLImput" id="webImageURLInput" />
+            </td>
+        </tr>
+        <tr>
             <td colspan="4" id="fileSelectCell">
                 <input type="file" id="fileSelectInput" accept="image/*" onchange="Namer.handleFiles(this.files)" style="display:none;">
                 <button type="button" id="fileSelectButton" onclick="document.getElementById('fileSelectInput').click()">Select Image</button>

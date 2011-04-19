@@ -30,6 +30,10 @@ var Namer = {
             // draw the image
             context.drawImage(img, 0, 0);
         };
+        img.onerror = function(e){
+            e.stopPropagation();
+            e.preventDefault();
+        };
         img.src = filePath;
     },
     
@@ -46,7 +50,7 @@ var Namer = {
         // http://stackoverflow.com/questions/4121142/javascript-getimagedata-for-canvas-html5
         try {
             try { 
-                var imgData = context.getImageData(x, y, 1, 1); 
+                var imgData = context.getImageData(x, y, 1, 1);
             } catch( e ) { 
                 netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
                 var imgData = context.getImageData(x, y, 1, 1);
@@ -224,6 +228,19 @@ var Namer = {
         $('#colorSet').change(function(){
             Namer.updateColourSet();
         });
+        
+        // allow a web-based URL to be used to specify the image
+        $('#webImageURLInput').keyup(function(){
+            // http://stackoverflow.com/questions/169625/regex-to-check-if-valid-url-that-ends-in-jpg-png-or-gif
+            // var regex = (?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?;
+            // if( $(this).val().match
+            console.log($(this).val());
+            Namer.drawImage( $(this).val() );
+        }).focus(function() {
+            //highlight the Sharing Code when it's box gets focus
+            //in Chrome / Safari, you need to drag the mouse slightly when you click for it to highlight
+			$(this).select();
+		});;
     },
     
     /**
