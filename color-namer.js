@@ -89,6 +89,20 @@ var Namer = {
     },
     
     /**
+        Converts an integer to hex
+    */
+    toHex: function( val ){
+        return val.toString(16);
+    },
+    
+    /**
+        Converts a rgb triplet to hex
+    */
+    RGBToHex: function( r, g, b ){
+        return Namer.toHex( r ) + Namer.toHex( g ) + Namer.toHex( b );
+    },
+    
+    /**
         Visually displays the RGB values provided
     */
     displayRGB: function( rgba ){
@@ -107,7 +121,7 @@ var Namer = {
     updateColorInfo: function( e ){
         var coords = Namer.getMouseClickCoordinates( e );
         var rgba = Namer.getRGBA( coords.x, coords.y );
-        console.log("rgba", rgba.r, rgba.g, rgba.b, rgba.a);
+        // console.log("rgba", rgba.r, rgba.g, rgba.b, rgba.a);
         Namer.displayRGB( rgba );
     },
     
