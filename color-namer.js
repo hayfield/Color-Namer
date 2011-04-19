@@ -1,4 +1,3 @@
-
 var Namer = {
 
     /**
@@ -10,6 +9,11 @@ var Namer = {
         The canvas context
     */
     context: null,
+    
+    /**
+        The set of colours currently being used for naming
+    */
+    colors: null,
     
     /**
         Draws an image with the specified file path in the top-left corner
@@ -133,6 +137,7 @@ var Namer = {
         context = canvas.getContext("2d");
         canvas.width = document.width;
         canvas.height = document.height;
+        colors = xkcdtop949;
         canvas.addEventListener("mousemove", Namer.updateColorInfo, false);
         Namer.drawImage("img.png");
     }

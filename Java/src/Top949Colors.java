@@ -30,7 +30,7 @@ public class Top949Colors {
 			colors[i] = colorsOrig[i].split(",");
 		}
 		
-		String JSON = "var top949 = {\n";
+		String JSON = "var xkcdtop949 = {\n";
 		for(int i = 0; i < colors.length; i++){
 			String out = "";
 			JSON += "\t\"" + colors[i][1].substring(1) + "\": {\n";
