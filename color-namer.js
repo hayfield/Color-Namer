@@ -22,11 +22,11 @@ var Namer = {
         var img = new Image();
         img.onload = function(){
             // scale the canvas to fit the image
-            var width = img.width > document.width ? img.width : document.width;
-            var height = img.height > document.height ? img.height : document.height;
+            var width = img.width > $(window).width() ? img.width : $(window).width();
+            var height = img.height > $(window).height() ? img.height : $(window).height();
             canvas.width = width;
             canvas.height = height;
-            console.log( img.width, img.height, document.width, document.height, width, height );
+            // console.log( img.width, img.height, document.width, document.height, width, height, $(window).width(), $(window).height() );
             // draw the image
             context.drawImage(img, 0, 0);
         };
