@@ -207,13 +207,46 @@ var Namer = {
         canvas.width = document.width;
         canvas.height = document.height;
         Namer.updateColourSet();
+        
         canvas.addEventListener("mousemove", Namer.updateColorInfo, false);
+        canvas.addEventListener("dragenter", Namer.dragEnter, false);
+        canvas.addEventListener("dragover", Namer.dragOver, false);
+        canvas.addEventListener("drop", Namer.drop, false);
+
         Namer.drawImage("img.png");
         
         // allow the set of colours being used to be changed
         $('#colorSet').change(function(){
             Namer.updateColourSet();
         });
+    },
+    
+    /**
+        Stop the action from occuring
+        https://developer.mozilla.org/en/using_files_from_web_applications
+    */
+    dragEnter: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+    },
+    /**
+        Stop the action from occuring
+    */
+    dragOver: function(e){
+        e.stopPropagation();
+        e.preventDefault();
+    },
+    /**
+        Load an image into the canvas when it is dropped onto it
+    */
+    drop: function(e){
+        e.stopPropagation();
+        e.preventDefault();
+
+        var dt = e.dataTransfer;
+        var files = dt.files;
+
+        Namer.handleFiles(files);
     },
     
     /**
@@ -234,7 +267,6 @@ var Namer = {
             var reader = new FileReader();
             reader.onload = function(e){
                 Namer.drawImage( e.target.result );
-                console.log("loaded");
             };
             reader.readAsDataURL(file);
           }
