@@ -81,13 +81,41 @@ var Namer = {
     },
     
     /**
+        Converts a 0-255 value (RGBA) into the correct integer pixel width to display in the visual box
+    */
+    convertToPX: function( val ){
+        var maxWidth = $('#redBar').width(); //all of the bars are the same, so just choose one of them
+        return Math.ceil( (val / 255) * maxWidth );
+    },
+    
+    /**
+        Visually displays the RGB values provided
+    */
+    displayRGB: function( rgba ){
+        $('#redBarVal').width( Namer.convertToPX( rgba.r ) + 'px' );
+        $('#greenBarVal').width( Namer.convertToPX( rgba.g ) + 'px' );
+        $('#blueBarVal').width( Namer.convertToPX( rgba.b ) + 'px' );
+        $('#redValue').text( rgba.r );
+        $('#greenValue').text( rgba.g );
+        $('#blueValue').text( rgba.b );
+    },
+    
+    /**
+        Updates colour info based on the position of the mouse
+        Takes a mouse event as a parameter
+    */
+    updateColorInfo: function( e ){
+        var coords = Namer.getMouseClickCoordinates( e );
+        var rgba = Namer.getRGBA( coords.x, coords.y );
+        console.log("rgba", rgba.r, rgba.g, rgba.b, rgba.a);
+        Namer.displayRGB( rgba );
+    },
+    
+    /**
         Called when a click event occurs
     */
     onClick: function( e ){
-        var coords = Namer.getMouseClickCoordinates( e );
-        console.log("coords:", coords.x, coords.y );
-        var rgba = Namer.getRGBA( coords.x, coords.y );
-        console.log("rgba", rgba.r, rgba.g, rgba.b, rgba.a);
+        Namer.updateColorInfo( e );
     },
 
     
