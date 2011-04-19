@@ -1,0 +1,3 @@
+A tool which allows you to take an image, move your mouse over a specific pixel and be given the name of the colour.
+
+Uses a HTML5 canvas to display the images.
