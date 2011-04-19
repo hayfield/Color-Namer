@@ -181,6 +181,23 @@ var Namer = {
     },
     
     /**
+        Switches to the colour set that is selected in the dropdown
+    */
+    updateColourSet: function(){
+        var selected = $('#colorSet').val();
+        switch( selected ){
+            case "xkcdtop949":
+                colors = xkcdtop949;
+                break;
+            case "x11colors":
+                colors = x11colors;
+                break;
+            default:
+                colors = xkcdtop949;
+        }
+    },
+    
+    /**
         Initialises the color namer
     */
     init: function(){
@@ -189,23 +206,13 @@ var Namer = {
         context = canvas.getContext("2d");
         canvas.width = document.width;
         canvas.height = document.height;
-        colors = x11colors;
+        Namer.updateColourSet();
         canvas.addEventListener("mousemove", Namer.updateColorInfo, false);
         Namer.drawImage("img.png");
         
         // allow the set of colours being used to be changed
         $('#colorSet').change(function(){
-            var selected = $('#colorSet').val();
-            switch( selected ){
-                case "xkcdtop949":
-                    colors = xkcdtop949;
-                    break;
-                case "x11colors":
-                    colors = x11colors;
-                    break;
-                default:
-                    colors = xkcdtop949;
-            }
+            Namer.updateColourSet();
         });
     },
     
