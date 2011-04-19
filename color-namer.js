@@ -13,7 +13,6 @@ var Namer = {
         canvas = document.getElementById("mainCanvas");
         canvas.width = document.width;
         canvas.height = document.height;
-        Namer.gobble();
     }
 
 };
