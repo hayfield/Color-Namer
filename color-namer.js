@@ -11,7 +11,7 @@ var Namer = {
     context: null,
     
     /**
-        The set of colours currently being used for naming
+        The set of colors currently being used for naming
     */
     colors: null,
     
@@ -132,9 +132,9 @@ var Namer = {
         $('#redValue').text( rgba.r );
         $('#greenValue').text( rgba.g );
         $('#blueValue').text( rgba.b );
-        //update the colour name and display the actual / calculated colours
-        var colorHex = Namer.determineNamedColourHex( rgba );
-        $('#colorName').text( Namer.getNameOfColour( colorHex ) );
+        //update the color name and display the actual / calculated colors
+        var colorHex = Namer.determineNamedColorHex( rgba );
+        $('#colorName').text( Namer.getNameOfColor( colorHex ) );
         $('#actualColor').css( 'background-color', '#' + Namer.RGBToHex( rgba.r, rgba.g, rgba.b ) );
         $('#calculatedColor').css( 'background-color', '#' + colorHex );
     },
@@ -142,9 +142,9 @@ var Namer = {
     /**
         Works out the nearest hex value that has been named
         
-        Imagines the rgb values in a 3D space and finds the named colour that is nearest
+        Imagines the rgb values in a 3D space and finds the named color that is nearest
     */
-    determineNamedColourHex: function( rgba ){
+    determineNamedColorHex: function( rgba ){
         var actualPoint = rgba;
         var nearestDistance = 33554432;
         var comparisonPoint = {};
@@ -164,11 +164,11 @@ var Namer = {
     },
     
     /**
-        Returns the name of the colour which has the specified hex value.
+        Returns the name of the color which has the specified hex value.
         
         Assumes that a check has already been made to ensure it is a valid value.
     */
-    getNameOfColour: function( hex ){
+    getNameOfColor: function( hex ){
         return colors[hex].name;
     },
     
@@ -181,7 +181,7 @@ var Namer = {
     },
     
     /**
-        Updates colour info based on the position of the mouse
+        Updates color info based on the position of the mouse
         Takes a mouse event as a parameter
     */
     updateColorInfo: function( e ){
@@ -192,9 +192,9 @@ var Namer = {
     },
     
     /**
-        Switches to the colour set that is selected in the dropdown
+        Switches to the color set that is selected in the dropdown
     */
-    updateColourSet: function(){
+    updateColorSet: function(){
         var selected = $('#colorSet').val();
         switch( selected ){
             case "xkcdtop949":
@@ -215,7 +215,7 @@ var Namer = {
         $('#rgbBox').draggable();
         canvas = document.getElementById("mainCanvas");
         context = canvas.getContext("2d");
-        Namer.updateColourSet();
+        Namer.updateColorSet();
         
         canvas.addEventListener("mousemove", Namer.updateColorInfo, false);
         canvas.addEventListener("dragenter", Namer.dragEnter, false);
@@ -224,9 +224,9 @@ var Namer = {
 
         Namer.drawImage("img.png");
         
-        // allow the set of colours being used to be changed
+        // allow the set of colors being used to be changed
         $('#colorSet').change(function(){
-            Namer.updateColourSet();
+            Namer.updateColorSet();
         });
         
         // allow a web-based URL to be used to specify the image
