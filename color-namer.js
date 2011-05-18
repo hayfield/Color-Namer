@@ -51,7 +51,7 @@ var Namer = {
         try {
             try { 
                 var imgData = context.getImageData(x, y, 1, 1);
-            } catch( e ) { 
+            } catch(e) { 
                 netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
                 var imgData = context.getImageData(x, y, 1, 1);
             } 						 
@@ -71,8 +71,8 @@ var Namer = {
     },
     
     /**
-        Returns the x, y coordinate on a canvas that a click was made.
-        Passed a click event as a parameter.
+        Returns the x, y coordinate on a canvas that a click was made
+        Passed a click event as a parameter
         
         http://stackoverflow.com/questions/55677/how-do-i-get-the-coordinates-of-a-mouse-click-on-a-canvas-element
         http://answers.oreilly.com/topic/1929-how-to-use-the-canvas-and-draw-elements-in-html5/
@@ -96,7 +96,7 @@ var Namer = {
     },
     
     /**
-        Converts a 0-255 value (RGBA) into the correct integer pixel width to display in the visual box
+        Converts a 0-255 value (RGBA) into the correct integer pixel width to display in the visual box.
     */
     convertToPX: function( val ){
         var maxWidth = $('#redBar').width(); //all of the bars are the same, so just choose one of them
@@ -125,14 +125,14 @@ var Namer = {
         Visually displays the RGB values provided
     */
     displayRGB: function( rgba ){
-        //update the RGB bars
+        // update the RGB bars
         $('#redBarVal').width( Namer.convertToPX( rgba.r ) + 'px' );
         $('#greenBarVal').width( Namer.convertToPX( rgba.g ) + 'px' );
         $('#blueBarVal').width( Namer.convertToPX( rgba.b ) + 'px' );
         $('#redValue').text( rgba.r );
         $('#greenValue').text( rgba.g );
         $('#blueValue').text( rgba.b );
-        //update the color name and display the actual / calculated colors
+        // update the color name and display the actual / calculated colors
         var colorHex = Namer.determineNamedColorHex( rgba );
         $('#colorName').text( Namer.getNameOfColor( colorHex ) );
         $('#actualColor').css( 'background-color', '#' + Namer.RGBToHex( rgba.r, rgba.g, rgba.b ) );
@@ -141,7 +141,6 @@ var Namer = {
         
     /**
         Works out the nearest hex value that has been named
-        
         Imagines the rgb values in a 3D space and finds the named color that is nearest
     */
     determineNamedColorHex: function( rgba ){
@@ -164,9 +163,8 @@ var Namer = {
     },
     
     /**
-        Returns the name of the color which has the specified hex value.
-        
-        Assumes that a check has already been made to ensure it is a valid value.
+        Returns the name of the color which has the specified hex value
+        Assumes that a check has already been made to ensure it is a valid value
     */
     getNameOfColor: function( hex ){
         return colors[hex].name;
@@ -174,7 +172,7 @@ var Namer = {
     
     /**
         Finds the distance between two points in (r, g, b) space rather than (x, y, z)
-        Used 3D pythagorus
+        Uses 3D pythagorus
     */
     distanceBetweenPoints: function( pt1, pt2 ){
         return Math.sqrt( (pt1.r-pt2.r)*(pt1.r-pt2.r) + (pt1.g-pt2.g)*(pt1.g-pt2.g) + (pt1.b-pt2.b)*(pt1.b-pt2.b) );
@@ -243,19 +241,20 @@ var Namer = {
                 if(e instanceof InternalError && e.message.indexOf("regular expression too complex") !== -1 && e.keyCode === 13 ){
                     Namer.drawImage( $(this).val() );                  
                 } else {
-                    throw new Error("unable to load image from URL");
+                    throw new Error("Unable to load image from URL");
                 }                
             }
              
         }).focus(function() {
-            //highlight the Sharing Code when it's box gets focus
-            //in Chrome / Safari, you need to drag the mouse slightly when you click for it to highlight
+            // highlight the URL when it's box gets focus
+            // in Chrome / Safari, you need to drag the mouse slightly when you click for it to highlight
 			$(this).select();
 		});
     },
     
     /**
         Stop the action from occuring
+        
         https://developer.mozilla.org/en/using_files_from_web_applications
     */
     dragEnter: function(e) {
