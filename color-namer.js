@@ -29,6 +29,7 @@ var Namer = {
             // console.log( img.width, img.height, document.width, document.height, width, height, $(window).width(), $(window).height() );
             // draw the image
             context.drawImage(img, 0, 0);
+            Namer.storeImagePath(img.src);
         };
         img.onerror = function(e){
             e.stopPropagation();
@@ -220,7 +221,9 @@ var Namer = {
         canvas.addEventListener("dragover", Namer.dragOver, false);
         canvas.addEventListener("drop", Namer.drop, false);
 
-        Namer.drawImage("img.png");
+        if( !Namer.loadImageFromStorage() ){
+            Namer.drawImage("img.png");
+        }
         
         // allow the set of colors being used to be changed
         $('#colorSet').change(function(){
@@ -302,6 +305,43 @@ var Namer = {
             };
             reader.readAsDataURL(file);
           }
+    },
+    
+    /**
+        Checks to see whether localStorage is supported
+        
+        http://diveintohtml5.org/storage.html
+    */
+    supportsLocalStorage: function(){
+        try {
+            return 'localStorage' in window && window['localStorage'] !== null;
+        } catch (e) {
+            return false;
+        }
+    },
+    
+    /**
+        Stores the path to the current image in localStorage so it'll be displayed as the default later
+    */
+    storeImagePath: function( filePath ){
+        if( Namer.supportsLocalStorage ){
+            localStorage.setItem( 'imagePath', filePath );
+        }
+    },
+    
+    /**
+        Reads the path to the image stored in localStorage and displays it on the canvas
+    */
+    loadImageFromStorage: function(){
+        if( Namer.supportsLocalStorage ){
+            var filePath = localStorage.getItem( 'imagePath' );
+            if( filePath ){
+                Namer.drawImage( filePath );
+                return true;
+            }
+        }
+        
+        return false;
     }
 
 };
