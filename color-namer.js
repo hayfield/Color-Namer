@@ -14,6 +14,16 @@ var Namer = {
         The set of colors currently being used for naming
     */
     colors: null,
+	
+	/**
+		Specifies whether the mouse has been pressed
+	*/
+	mousePressed: false,
+	
+	/**
+		The area that has been selected by dragging the mouse
+	*/
+	selectedArea: null,
     
     /**
         Draws an image with the specified file path in the top-left corner
@@ -220,6 +230,9 @@ var Namer = {
         canvas.addEventListener("dragenter", Namer.dragEnter, false);
         canvas.addEventListener("dragover", Namer.dragOver, false);
         canvas.addEventListener("drop", Namer.drop, false);
+		
+		canvas.addEventListener("mousedown", Namer.mouseDown, false);
+		canvas.addEventListener("mouseup", Namer.mouseUp, false);
 
         if( !Namer.loadImageFromStorage() ){
             Namer.drawImage("img.png");
@@ -254,6 +267,21 @@ var Namer = {
 			$(this).select();
 		});
     },
+	
+	/**
+		Specify that the mouse has been pressed
+	*/
+	mouseDown: function(e){
+		console.log('down');
+		mousePressed = true;
+	},
+	/**
+		Specify that the mouse has been raised again
+	*/
+	mouseUp: function(e){
+		console.log('up');
+		mousePressed = false;
+	},
     
     /**
         Stop the action from occuring
