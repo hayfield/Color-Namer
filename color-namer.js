@@ -327,6 +327,7 @@ var Namer = {
 		} else {
 			var mouseCoords = Namer.getMouseClickCoordinates( e );
 			var distBetweenCoords = Namer.absoluteDistanceBetweenCoordinates( Namer.mouseDownCoordinates, mouseCoords );
+			Namer.drawImage( img );
 			context.strokeRect( Namer.mouseDownCoordinates.x, Namer.mouseDownCoordinates.y,
 								distBetweenCoords.x, distBetweenCoords.y );
 		}
