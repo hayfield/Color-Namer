@@ -87,6 +87,40 @@ var Namer = {
         
         return rgba;
     },
+	
+	/**
+		Returns the average rgba value for a selected ares on the canvas
+	*/
+	getAverageRGBA: function( startCoord, endCoord ){
+		var xTop = Math.min( startCoord.x, endCoord.x );
+		var yLeft = Math.min( startCoord.y, endCoord.y );
+		var xBottom = Math.max( startCoord.x, endCoord.x );
+		var yRight = Math.max( startCoord.y, endCoord.y );
+		
+		var averageRGBA = {};
+		averageRGBA.r = 0;
+		averageRGBA.g = 0;
+		averageRGBA.b = 0;
+		averageRGBA.a = 0;
+		var numberOfPoints = (xBottom - xTop) * (yRight - yLeft);
+		
+		for( var x = xTop; x <= xBottom; x++ ){
+			for( var y = yLeft; y <= yRight; y++ ){
+				var pointRGBA = Namer.getRGBA( x, y );
+				averageRGBA.r += pointRGBA.r;
+				averageRGBA.g += pointRGBA.g;
+				averageRGBA.b += pointRGBA.b;
+				averageRGBA.a += pointRGBA.a;
+			}
+		}
+		
+		averageRGBA.r = Math.round( averageRGBA.r / numberOfPoints );
+		averageRGBA.g = Math.round( averageRGBA.g / numberOfPoints );
+		averageRGBA.b = Math.round( averageRGBA.b / numberOfPoints );
+		averageRGBA.a = Math.round( averageRGBA.a / numberOfPoints );
+		
+		return averageRGBA;
+	},
     
     /**
         Returns the x, y coordinate on a canvas that a click was made
@@ -116,7 +150,7 @@ var Namer = {
 	/**
 		Returns the absolute distance between two coordinates
 	*/
-	absoluteDistanceBetweenCoordinates: function( start, end ){
+	distanceBetweenCoordinates: function( start, end ){
 		var coords = {};
 		coords.x = end.x - start.x;
 		coords.y = end.y - start.y;
@@ -214,7 +248,6 @@ var Namer = {
     updateColorInfo: function( e ){
         var coords = Namer.getMouseClickCoordinates( e );
         var rgba = Namer.getRGBA( coords.x, coords.y );
-        // console.log("rgba", rgba.r, rgba.g, rgba.b, rgba.a);
         Namer.displayRGB( rgba );
     },
     
@@ -298,6 +331,9 @@ var Namer = {
 	*/
 	mouseUp: function(e){
 		Namer.mousePressed = false;
+		var mouseCoords = Namer.getMouseClickCoordinates( e );
+		var rgba = Namer.getAverageRGBA( Namer.mouseDownCoordinates, mouseCoords );
+		Namer.displayRGB( rgba );
 	},
 	/**
 		Do something when the mouse is moved over the canvas
@@ -307,7 +343,7 @@ var Namer = {
 			Namer.updateColorInfo(e);
 		} else {
 			var mouseCoords = Namer.getMouseClickCoordinates( e );
-			var distBetweenCoords = Namer.absoluteDistanceBetweenCoordinates( Namer.mouseDownCoordinates, mouseCoords );
+			var distBetweenCoords = Namer.distanceBetweenCoordinates( Namer.mouseDownCoordinates, mouseCoords );
 			Namer.drawImage( img );
 			context.strokeRect( Namer.mouseDownCoordinates.x, Namer.mouseDownCoordinates.y,
 								distBetweenCoords.x, distBetweenCoords.y );
