@@ -226,7 +226,7 @@ var Namer = {
         context = canvas.getContext("2d");
         Namer.updateColorSet();
         
-        canvas.addEventListener("mousemove", Namer.updateColorInfo, false);
+        canvas.addEventListener("mousemove", Namer.mouseMove, false);
         canvas.addEventListener("dragenter", Namer.dragEnter, false);
         canvas.addEventListener("dragover", Namer.dragOver, false);
         canvas.addEventListener("drop", Namer.drop, false);
@@ -281,6 +281,12 @@ var Namer = {
 	mouseUp: function(e){
 		console.log('up');
 		mousePressed = false;
+	},
+	/**
+		Do something when the mouse is moved over the canvas
+	*/
+	mouseMove: function(e){
+		Namer.updateColorInfo(e);
 	},
     
     /**
