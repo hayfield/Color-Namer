@@ -54,6 +54,28 @@ var Namer = {
         context.drawImage(image, 0, 0);
         Namer.storeImagePath(image.src);
 	},
+	
+	/**
+		Returns the image data for the specified area on the canvas
+	*/
+	getImageData: function( x, y, width, height ){
+		var imgData;
+		
+		// http://blog.project-sierra.de/archives/1577
+        // http://stackoverflow.com/questions/4121142/javascript-getimagedata-for-canvas-html5
+        try {
+            try { 
+                imgData = context.getImageData(x, y, width, height);
+            } catch(e) { 
+                netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
+                imgData = context.getImageData(x, y, width, height);
+            } 						 
+        } catch (e) {
+            throw new Error("unable to access image data: " + e);
+        }
+		
+		return imgData;
+	},
     
     /**
         Returns the rgba value at a specified coordinate on the canvas
@@ -64,18 +86,8 @@ var Namer = {
     getRGBA: function( x, y ){
         var r, g, b, a;
         var rgba = {};
-        // http://blog.project-sierra.de/archives/1577
-        // http://stackoverflow.com/questions/4121142/javascript-getimagedata-for-canvas-html5
-        try {
-            try { 
-                var imgData = context.getImageData(x, y, 1, 1);
-            } catch(e) { 
-                netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
-                var imgData = context.getImageData(x, y, 1, 1);
-            } 						 
-        } catch (e) {
-            throw new Error("unable to access image data: " + e);
-        }
+        
+		var imgData = Namer.getImageData( x, y, 1, 1 );
         
         var pixel = imgData.data;
         if( pixel.length === 4 ){
@@ -103,15 +115,14 @@ var Namer = {
 		averageRGBA.b = 0;
 		averageRGBA.a = 0;
 		var numberOfPoints = (xBottom - xTop) * (yRight - yLeft);
+		var imgData = Namer.getImageData( xTop, yLeft, xBottom - xTop, yRight - yLeft );
 		
-		for( var x = xTop; x <= xBottom; x++ ){
-			for( var y = yLeft; y <= yRight; y++ ){
-				var pointRGBA = Namer.getRGBA( x, y );
-				averageRGBA.r += pointRGBA.r;
-				averageRGBA.g += pointRGBA.g;
-				averageRGBA.b += pointRGBA.b;
-				averageRGBA.a += pointRGBA.a;
-			}
+		var length = imgData.data.length / 4;
+		for( var i = 0; i < length; i++ ){
+			averageRGBA.r += imgData.data[i * 4];
+			averageRGBA.g += imgData.data[i * 4 + 1];
+			averageRGBA.b += imgData.data[i * 4 + 2];
+			averageRGBA.a += imgData.data[i * 4 + 3];
 		}
 		
 		averageRGBA.r = Math.round( averageRGBA.r / numberOfPoints );
