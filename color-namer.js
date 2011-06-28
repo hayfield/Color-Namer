@@ -114,22 +114,6 @@ var Namer = {
     },
 	
 	/**
-		Returns the distance between two coordinates
-	*/
-	distanceBetweenCoordinates: function( first, second ){
-		var xLower = first.x < second.x ? first.x : second.x;
-		var xHigher = first.x > second.x ? first.x : second.x;
-		var yLower = first.y < second.y ? first.y : second.y;
-		var yHigher = first.y > second.y ? first.y : second.y;
-		
-		var coords = {};
-		coords.x = xHigher - xLower;
-		coords.y = yHigher - yLower;
-		
-		return coords;
-	},
-	
-	/**
 		Returns the absolute distance between two coordinates
 	*/
 	absoluteDistanceBetweenCoordinates: function( start, end ){
@@ -306,16 +290,13 @@ var Namer = {
 		Specify that the mouse has been pressed
 	*/
 	mouseDown: function(e){
-		console.log('down');
 		Namer.mouseDownCoordinates = Namer.getMouseClickCoordinates( e );
-		console.log( Namer.mouseDownCoordinates );
 		Namer.mousePressed = true;
 	},
 	/**
 		Specify that the mouse has been raised again
 	*/
 	mouseUp: function(e){
-		console.log('up');
 		Namer.mousePressed = false;
 	},
 	/**
