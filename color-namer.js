@@ -49,8 +49,8 @@ var Namer = {
         var height = image.height > $(window).height() ? image.height : $(window).height();
         canvas.width = width;
         canvas.height = height;
-        // console.log( image.width, image.height, document.width, document.height, width, height, $(window).width(), $(window).height() );
-        // draw the image
+        
+		// draw the image
         context.drawImage(image, 0, 0);
         Namer.storeImagePath(image.src);
 	},
@@ -175,7 +175,8 @@ var Namer = {
     */
     convertToPX: function( val ){
         var maxWidth = $('#redBar').width(); //all of the bars are the same, so just choose one of them
-        return Math.ceil( (val / 255) * maxWidth );
+        
+		return Math.ceil( (val / 255) * maxWidth );
     },
     
     /**
@@ -186,6 +187,7 @@ var Namer = {
         if( str.length === 1 ){
             str = '0' + str;
         }
+		
         return str;
     },
     
@@ -207,6 +209,7 @@ var Namer = {
         $('#redValue').text( rgba.r );
         $('#greenValue').text( rgba.g );
         $('#blueValue').text( rgba.b );
+		
         // update the color name and display the actual / calculated colors
         var colorHex = Namer.determineNamedColorHex( rgba );
         $('#colorName').text( Namer.getNameOfColor( colorHex ) );
@@ -224,6 +227,7 @@ var Namer = {
         var comparisonPoint = {};
         var distance = 33554432;
         var nearestHex = "";
+		
         $.each(colors, function(key, val) {
             comparisonPoint.r = val.r;
             comparisonPoint.g = val.g;
@@ -234,6 +238,7 @@ var Namer = {
                 nearestHex = key;
             }
         });
+		
         return nearestHex;
     },
     
@@ -357,6 +362,7 @@ var Namer = {
 		} else {
 			var mouseCoords = Namer.getMouseClickCoordinates( e );
 			var distBetweenCoords = Namer.distanceBetweenCoordinates( Namer.mouseDownCoordinates, mouseCoords );
+			
 			Namer.drawImage( img );
 			context.fillStyle = 'rgba(51,153,255,0.3)';
 			context.strokeStyle = 'rgb(150,205,255)';
@@ -393,7 +399,7 @@ var Namer = {
         var dt = e.dataTransfer;
         var files = dt.files;
 
-        Namer.handleFiles(files);
+        Namer.handleFiles( files );
     },
     
     /**
