@@ -26,20 +26,12 @@ var Namer = {
 	mouseDownCoordinates: null,
     
     /**
-        Draws an image with the specified file path in the top-left corner
+        Loads and draws an image with the specified file path in the top-left corner
     */
     loadAndDrawImage: function( filePath ){
         img = new Image();
         img.onload = function(){
-            // scale the canvas to fit the image
-            var width = img.width > $(window).width() ? img.width : $(window).width();
-            var height = img.height > $(window).height() ? img.height : $(window).height();
-            canvas.width = width;
-            canvas.height = height;
-            // console.log( img.width, img.height, document.width, document.height, width, height, $(window).width(), $(window).height() );
-            // draw the image
-            context.drawImage(img, 0, 0);
-            Namer.storeImagePath(img.src);
+            Namer.drawImage( img );
         };
         img.onerror = function(e){
             e.stopPropagation();
@@ -47,6 +39,21 @@ var Namer = {
         };
         img.src = filePath;
     },
+	
+	/**
+		Draw an image in the top-left corner of the canvas
+	*/
+	drawImage: function( image ){
+		// scale the canvas to fit the image
+        var width = image.width > $(window).width() ? image.width : $(window).width();
+        var height = image.height > $(window).height() ? image.height : $(window).height();
+        canvas.width = width;
+        canvas.height = height;
+        // console.log( image.width, image.height, document.width, document.height, width, height, $(window).width(), $(window).height() );
+        // draw the image
+        context.drawImage(image, 0, 0);
+        Namer.storeImagePath(image.src);
+	},
     
     /**
         Returns the rgba value at a specified coordinate on the canvas
