@@ -23,7 +23,7 @@ var Namer = {
 	/**
 		The area that has been selected by dragging the mouse
 	*/
-	selectedArea: null,
+	mouseDownCoordinates: null,
     
     /**
         Draws an image with the specified file path in the top-left corner
@@ -273,6 +273,8 @@ var Namer = {
 	*/
 	mouseDown: function(e){
 		console.log('down');
+		Namer.mouseDownCoordinates = Namer.getMouseClickCoordinates( e );
+		console.log( Namer.mouseDownCoordinates );
 		mousePressed = true;
 	},
 	/**
@@ -383,9 +385,6 @@ var Namer = {
 $(function() {
 	Namer.init();
 });
-
-
-
 
 
 
