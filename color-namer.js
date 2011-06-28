@@ -105,6 +105,33 @@ var Namer = {
         coords.y = y;
         return coords;
     },
+	
+	/**
+		Returns the distance between two coordinates
+	*/
+	distanceBetweenCoordinates: function( first, second ){
+		var xLower = first.x < second.x ? first.x : second.x;
+		var xHigher = first.x > second.x ? first.x : second.x;
+		var yLower = first.y < second.y ? first.y : second.y;
+		var yHigher = first.y > second.y ? first.y : second.y;
+		
+		var coords = {};
+		coords.x = xHigher - xLower;
+		coords.y = yHigher - yLower;
+		
+		return coords;
+	},
+	
+	/**
+		Returns the absolute distance between two coordinates
+	*/
+	absoluteDistanceBetweenCoordinates: function( start, end ){
+		var coords = {};
+		coords.x = end.x - start.x;
+		coords.y = end.y - start.y;
+		
+		return coords;
+	},
     
     /**
         Converts a 0-255 value (RGBA) into the correct integer pixel width to display in the visual box.
@@ -288,7 +315,14 @@ var Namer = {
 		Do something when the mouse is moved over the canvas
 	*/
 	mouseMove: function(e){
-		Namer.updateColorInfo(e);
+		if( !Namer.mousePressed ){
+			Namer.updateColorInfo(e);
+		} else {
+			var mouseCoords = Namer.getMouseClickCoordinates( e );
+			var distBetweenCoords = Namer.absoluteDistanceBetweenCoordinates( Namer.mouseDownCoordinates, mouseCoords );
+			context.strokeRect( Namer.mouseDownCoordinates.x, Namer.mouseDownCoordinates.y,
+								distBetweenCoords.x, distBetweenCoords.y );
+		}
 	},
     
     /**
