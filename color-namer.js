@@ -275,14 +275,14 @@ var Namer = {
 		console.log('down');
 		Namer.mouseDownCoordinates = Namer.getMouseClickCoordinates( e );
 		console.log( Namer.mouseDownCoordinates );
-		mousePressed = true;
+		Namer.mousePressed = true;
 	},
 	/**
 		Specify that the mouse has been raised again
 	*/
 	mouseUp: function(e){
 		console.log('up');
-		mousePressed = false;
+		Namer.mousePressed = false;
 	},
 	/**
 		Do something when the mouse is moved over the canvas
