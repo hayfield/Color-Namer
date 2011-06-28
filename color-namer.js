@@ -342,6 +342,7 @@ var Namer = {
 	*/
 	mouseUp: function(e){
 		Namer.mousePressed = false;
+		Namer.drawImage( img );
 		var mouseCoords = Namer.getMouseClickCoordinates( e );
 		var rgba = Namer.getAverageRGBA( Namer.mouseDownCoordinates, mouseCoords );
 		Namer.displayRGB( rgba );
