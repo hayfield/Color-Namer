@@ -259,7 +259,7 @@ var Namer = {
         canvas.addEventListener("drop", Namer.drop, false);
 		
 		canvas.addEventListener("mousedown", Namer.mouseDown, false);
-		canvas.addEventListener("mouseup", Namer.mouseUp, false);
+		window.addEventListener("mouseup", Namer.mouseUp, false);
 
         if( !Namer.loadImageFromStorage() ){
             Namer.drawImage("img.png");
