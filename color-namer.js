@@ -28,8 +28,8 @@ var Namer = {
     /**
         Draws an image with the specified file path in the top-left corner
     */
-    drawImage: function( filePath ){
-        var img = new Image();
+    loadAndDrawImage: function( filePath ){
+        img = new Image();
         img.onload = function(){
             // scale the canvas to fit the image
             var width = img.width > $(window).width() ? img.width : $(window).width();
@@ -262,7 +262,7 @@ var Namer = {
 		window.addEventListener("mouseup", Namer.mouseUp, false);
 
         if( !Namer.loadImageFromStorage() ){
-            Namer.drawImage("img.png");
+            Namer.loadAndDrawImage("img.png");
         }
         
         // allow the set of colors being used to be changed
@@ -277,12 +277,12 @@ var Namer = {
             //var regex = new RegExp("(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?");
             try {
                 if( e.keyCode === 13 || $(this).val().match(regex) ){ //if user pressed enter or regex match
-                    Namer.drawImage( $(this).val() ); //attempt to load and draw the image with the given URL
+                    Namer.loadAndDrawImage( $(this).val() ); //attempt to load and draw the image with the given URL
                 }					 
             } catch (e) {
                 // allow it to pass if hitting enter and the issue's related to a FF4 issue regarding regexps
                 if(e instanceof InternalError && e.message.indexOf("regular expression too complex") !== -1 && e.keyCode === 13 ){
-                    Namer.drawImage( $(this).val() );                  
+                    Namer.loadAndDrawImage( $(this).val() );                  
                 } else {
                     throw new Error("Unable to load image from URL");
                 }                
@@ -371,7 +371,7 @@ var Namer = {
           
             var reader = new FileReader();
             reader.onload = function(e){
-                Namer.drawImage( e.target.result );
+                Namer.loadAndDrawImage( e.target.result );
             };
             reader.readAsDataURL(file);
           }
@@ -406,7 +406,7 @@ var Namer = {
         if( Namer.supportsLocalStorage ){
             var filePath = localStorage.getItem( 'imagePath' );
             if( filePath ){
-                Namer.drawImage( filePath );
+                Namer.loadAndDrawImage( filePath );
                 return true;
             }
         }
