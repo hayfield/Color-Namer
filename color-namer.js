@@ -358,6 +358,10 @@ var Namer = {
 			var mouseCoords = Namer.getMouseClickCoordinates( e );
 			var distBetweenCoords = Namer.distanceBetweenCoordinates( Namer.mouseDownCoordinates, mouseCoords );
 			Namer.drawImage( img );
+			context.fillStyle = 'rgba(51,153,255,0.3)';
+			context.strokeStyle = 'rgb(150,205,255)';
+			context.fillRect( Namer.mouseDownCoordinates.x, Namer.mouseDownCoordinates.y,
+								distBetweenCoords.x, distBetweenCoords.y );
 			context.strokeRect( Namer.mouseDownCoordinates.x, Namer.mouseDownCoordinates.y,
 								distBetweenCoords.x, distBetweenCoords.y );
 		}
