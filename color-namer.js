@@ -143,7 +143,7 @@ var Namer = {
     getMouseClickCoordinates: function( e ){
         var x, y;
         var coords = {};
-        if(e.pageX || e.pageY){ 
+        if( e.pageX || e.pageY ){ 
           x = e.pageX;
           y = e.pageY;
         } else { 
@@ -155,6 +155,7 @@ var Namer = {
         
         coords.x = x;
         coords.y = y;
+		
         return coords;
     },
 	
@@ -333,14 +334,14 @@ var Namer = {
 	/**
 		Specify that the mouse has been pressed
 	*/
-	mouseDown: function(e){
+	mouseDown: function( e ){
 		Namer.mouseDownCoordinates = Namer.getMouseClickCoordinates( e );
 		Namer.mousePressed = true;
 	},
 	/**
 		Specify that the mouse has been raised again
 	*/
-	mouseUp: function(e){
+	mouseUp: function( e ){
 		Namer.mousePressed = false;
 		Namer.drawImage( img );
 		var mouseCoords = Namer.getMouseClickCoordinates( e );
@@ -350,9 +351,9 @@ var Namer = {
 	/**
 		Do something when the mouse is moved over the canvas
 	*/
-	mouseMove: function(e){
+	mouseMove: function( e ){
 		if( !Namer.mousePressed ){
-			Namer.updateColorInfo(e);
+			Namer.updateColorInfo( e );
 		} else {
 			var mouseCoords = Namer.getMouseClickCoordinates( e );
 			var distBetweenCoords = Namer.distanceBetweenCoordinates( Namer.mouseDownCoordinates, mouseCoords );
@@ -367,21 +368,21 @@ var Namer = {
         
         https://developer.mozilla.org/en/using_files_from_web_applications
     */
-    dragEnter: function(e) {
+    dragEnter: function( e ) {
         e.stopPropagation();
         e.preventDefault();
     },
     /**
         Stop the action from occuring
     */
-    dragOver: function(e){
+    dragOver: function( e ){
         e.stopPropagation();
         e.preventDefault();
     },
     /**
         Load an image into the canvas when it is dropped onto it
     */
-    drop: function(e){
+    drop: function( e ){
         e.stopPropagation();
         e.preventDefault();
 
@@ -397,7 +398,7 @@ var Namer = {
         https://developer.mozilla.org/en/using_files_from_web_applications
         https://developer.mozilla.org/en/DOM/FileReader
     */
-    handleFiles: function(files){
+    handleFiles: function( files ){
         for(var i = 0; i < files.length; i++){
             var file = files[i];
             var imageType = /image.*/;
@@ -407,10 +408,10 @@ var Namer = {
             }
           
             var reader = new FileReader();
-            reader.onload = function(e){
+            reader.onload = function( e ){
                 Namer.loadAndDrawImage( e.target.result );
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL( file );
           }
     },
     
@@ -422,7 +423,7 @@ var Namer = {
     supportsLocalStorage: function(){
         try {
             return 'localStorage' in window && window['localStorage'] !== null;
-        } catch (e) {
+        } catch ( e ) {
             return false;
         }
     },
