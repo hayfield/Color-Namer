@@ -14,16 +14,16 @@ var Namer = {
         The set of colors currently being used for naming
     */
     colors: null,
-	
-	/**
-		Specifies whether the mouse has been pressed
-	*/
-	mousePressed: false,
-	
-	/**
-		The area that has been selected by dragging the mouse
-	*/
-	mouseDownCoordinates: null,
+    
+    /**
+        Specifies whether the mouse has been pressed
+    */
+    mousePressed: false,
+    
+    /**
+        The area that has been selected by dragging the mouse
+    */
+    mouseDownCoordinates: null,
     
     /**
         Loads and draws an image with the specified file path in the top-left corner
@@ -39,29 +39,29 @@ var Namer = {
         };
         img.src = filePath;
     },
-	
-	/**
-		Draw an image in the top-left corner of the canvas
-	*/
-	drawImage: function( image ){
-		// scale the canvas to fit the image
+    
+    /**
+        Draw an image in the top-left corner of the canvas
+    */
+    drawImage: function( image ){
+        // scale the canvas to fit the image
         var width = image.width > $(window).width() ? image.width : $(window).width();
         var height = image.height > $(window).height() ? image.height : $(window).height();
         canvas.width = width;
         canvas.height = height;
         
-		// draw the image
+        // draw the image
         context.drawImage(image, 0, 0);
         Namer.storeImagePath(image.src);
-	},
-	
-	/**
-		Returns the image data for the specified area on the canvas
-	*/
-	getImageData: function( x, y, width, height ){
-		var imgData;
-		
-		// http://blog.project-sierra.de/archives/1577
+    },
+    
+    /**
+        Returns the image data for the specified area on the canvas
+    */
+    getImageData: function( x, y, width, height ){
+        var imgData;
+        
+        // http://blog.project-sierra.de/archives/1577
         // http://stackoverflow.com/questions/4121142/javascript-getimagedata-for-canvas-html5
         try {
             try { 
@@ -69,13 +69,13 @@ var Namer = {
             } catch(e) { 
                 netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
                 imgData = context.getImageData(x, y, width, height);
-            } 						 
+            }                          
         } catch (e) {
             throw new Error("unable to access image data: " + e);
         }
-		
-		return imgData;
-	},
+        
+        return imgData;
+    },
     
     /**
         Returns the rgba value at a specified coordinate on the canvas
@@ -87,7 +87,7 @@ var Namer = {
         var r, g, b, a;
         var rgba = {};
         
-		var imgData = Namer.getImageData( x, y, 1, 1 );
+        var imgData = Namer.getImageData( x, y, 1, 1 );
         
         var pixel = imgData.data;
         if( pixel.length === 4 ){
@@ -99,39 +99,39 @@ var Namer = {
         
         return rgba;
     },
-	
-	/**
-		Returns the average rgba value for a selected ares on the canvas
-	*/
-	getAverageRGBA: function( startCoord, endCoord ){
-		var xTop = Math.min( startCoord.x, endCoord.x );
-		var yLeft = Math.min( startCoord.y, endCoord.y );
-		var xBottom = Math.max( startCoord.x, endCoord.x );
-		var yRight = Math.max( startCoord.y, endCoord.y );
-		
-		var averageRGBA = {};
-		averageRGBA.r = 0;
-		averageRGBA.g = 0;
-		averageRGBA.b = 0;
-		averageRGBA.a = 0;
-		var numberOfPoints = (xBottom - xTop) * (yRight - yLeft);
-		var imgData = Namer.getImageData( xTop, yLeft, xBottom - xTop, yRight - yLeft );
-		
-		var length = imgData.data.length / 4;
-		for( var i = 0; i < length; i++ ){
-			averageRGBA.r += imgData.data[i * 4];
-			averageRGBA.g += imgData.data[i * 4 + 1];
-			averageRGBA.b += imgData.data[i * 4 + 2];
-			averageRGBA.a += imgData.data[i * 4 + 3];
-		}
-		
-		averageRGBA.r = Math.round( averageRGBA.r / numberOfPoints );
-		averageRGBA.g = Math.round( averageRGBA.g / numberOfPoints );
-		averageRGBA.b = Math.round( averageRGBA.b / numberOfPoints );
-		averageRGBA.a = Math.round( averageRGBA.a / numberOfPoints );
-		
-		return averageRGBA;
-	},
+    
+    /**
+        Returns the average rgba value for a selected ares on the canvas
+    */
+    getAverageRGBA: function( startCoord, endCoord ){
+        var xTop = Math.min( startCoord.x, endCoord.x );
+        var yLeft = Math.min( startCoord.y, endCoord.y );
+        var xBottom = Math.max( startCoord.x, endCoord.x );
+        var yRight = Math.max( startCoord.y, endCoord.y );
+        
+        var averageRGBA = {};
+        averageRGBA.r = 0;
+        averageRGBA.g = 0;
+        averageRGBA.b = 0;
+        averageRGBA.a = 0;
+        var numberOfPoints = (xBottom - xTop) * (yRight - yLeft);
+        var imgData = Namer.getImageData( xTop, yLeft, xBottom - xTop, yRight - yLeft );
+        
+        var length = imgData.data.length / 4;
+        for( var i = 0; i < length; i++ ){
+            averageRGBA.r += imgData.data[i * 4];
+            averageRGBA.g += imgData.data[i * 4 + 1];
+            averageRGBA.b += imgData.data[i * 4 + 2];
+            averageRGBA.a += imgData.data[i * 4 + 3];
+        }
+        
+        averageRGBA.r = Math.round( averageRGBA.r / numberOfPoints );
+        averageRGBA.g = Math.round( averageRGBA.g / numberOfPoints );
+        averageRGBA.b = Math.round( averageRGBA.b / numberOfPoints );
+        averageRGBA.a = Math.round( averageRGBA.a / numberOfPoints );
+        
+        return averageRGBA;
+    },
     
     /**
         Returns the x, y coordinate on a canvas that a click was made
@@ -155,20 +155,20 @@ var Namer = {
         
         coords.x = x;
         coords.y = y;
-		
+        
         return coords;
     },
-	
-	/**
-		Returns the absolute distance between two coordinates
-	*/
-	distanceBetweenCoordinates: function( start, end ){
-		var coords = {};
-		coords.x = end.x - start.x;
-		coords.y = end.y - start.y;
-		
-		return coords;
-	},
+    
+    /**
+        Returns the absolute distance between two coordinates
+    */
+    distanceBetweenCoordinates: function( start, end ){
+        var coords = {};
+        coords.x = end.x - start.x;
+        coords.y = end.y - start.y;
+        
+        return coords;
+    },
     
     /**
         Converts a 0-255 value (RGBA) into the correct integer pixel width to display in the visual box.
@@ -176,7 +176,7 @@ var Namer = {
     convertToPX: function( val ){
         var maxWidth = $('#redBar').width(); //all of the bars are the same, so just choose one of them
         
-		return Math.ceil( (val / 255) * maxWidth );
+        return Math.ceil( (val / 255) * maxWidth );
     },
     
     /**
@@ -187,7 +187,7 @@ var Namer = {
         if( str.length === 1 ){
             str = '0' + str;
         }
-		
+        
         return str;
     },
     
@@ -209,7 +209,7 @@ var Namer = {
         $('#redValue').text( rgba.r );
         $('#greenValue').text( rgba.g );
         $('#blueValue').text( rgba.b );
-		
+        
         // update the color name and display the actual / calculated colors
         var colorHex = Namer.determineNamedColorHex( rgba );
         $('#colorName').text( Namer.getNameOfColor( colorHex ) );
@@ -227,7 +227,7 @@ var Namer = {
         var comparisonPoint = {};
         var distance = 33554432;
         var nearestHex = "";
-		
+        
         $.each(colors, function(key, val) {
             comparisonPoint.r = val.r;
             comparisonPoint.g = val.g;
@@ -238,7 +238,7 @@ var Namer = {
                 nearestHex = key;
             }
         });
-		
+        
         return nearestHex;
     },
     
@@ -298,9 +298,9 @@ var Namer = {
         canvas.addEventListener("dragenter", Namer.dragEnter, false);
         canvas.addEventListener("dragover", Namer.dragOver, false);
         canvas.addEventListener("drop", Namer.drop, false);
-		
-		canvas.addEventListener("mousedown", Namer.mouseDown, false);
-		window.addEventListener("mouseup", Namer.mouseUp, false);
+        
+        canvas.addEventListener("mousedown", Namer.mouseDown, false);
+        window.addEventListener("mouseup", Namer.mouseUp, false);
 
         if( !Namer.loadImageFromStorage() ){
             Namer.loadAndDrawImage("img.png");
@@ -319,7 +319,7 @@ var Namer = {
             try {
                 if( e.keyCode === 13 || $(this).val().match(regex) ){ //if user pressed enter or regex match
                     Namer.loadAndDrawImage( $(this).val() ); //attempt to load and draw the image with the given URL
-                }					 
+                }                     
             } catch (e) {
                 // allow it to pass if hitting enter and the issue's related to a FF4 issue regarding regexps
                 if(e instanceof InternalError && e.message.indexOf("regular expression too complex") !== -1 && e.keyCode === 13 ){
@@ -332,46 +332,46 @@ var Namer = {
         }).focus(function() {
             // highlight the URL when it's box gets focus
             // in Chrome / Safari, you need to drag the mouse slightly when you click for it to highlight
-			$(this).select();
-		});
+            $(this).select();
+        });
     },
-	
-	/**
-		Specify that the mouse has been pressed
-	*/
-	mouseDown: function( e ){
-		Namer.mouseDownCoordinates = Namer.getMouseClickCoordinates( e );
-		Namer.mousePressed = true;
-	},
-	/**
-		Specify that the mouse has been raised again
-	*/
-	mouseUp: function( e ){
-		Namer.mousePressed = false;
-		Namer.drawImage( img );
-		var mouseCoords = Namer.getMouseClickCoordinates( e );
-		var rgba = Namer.getAverageRGBA( Namer.mouseDownCoordinates, mouseCoords );
-		Namer.displayRGB( rgba );
-	},
-	/**
-		Do something when the mouse is moved over the canvas
-	*/
-	mouseMove: function( e ){
-		if( !Namer.mousePressed ){
-			Namer.updateColorInfo( e );
-		} else {
-			var mouseCoords = Namer.getMouseClickCoordinates( e );
-			var distBetweenCoords = Namer.distanceBetweenCoordinates( Namer.mouseDownCoordinates, mouseCoords );
-			
-			Namer.drawImage( img );
-			context.fillStyle = 'rgba(51,153,255,0.3)';
-			context.strokeStyle = 'rgb(150,205,255)';
-			context.fillRect( Namer.mouseDownCoordinates.x, Namer.mouseDownCoordinates.y,
-								distBetweenCoords.x, distBetweenCoords.y );
-			context.strokeRect( Namer.mouseDownCoordinates.x, Namer.mouseDownCoordinates.y,
-								distBetweenCoords.x, distBetweenCoords.y );
-		}
-	},
+    
+    /**
+        Specify that the mouse has been pressed
+    */
+    mouseDown: function( e ){
+        Namer.mouseDownCoordinates = Namer.getMouseClickCoordinates( e );
+        Namer.mousePressed = true;
+    },
+    /**
+        Specify that the mouse has been raised again
+    */
+    mouseUp: function( e ){
+        Namer.mousePressed = false;
+        Namer.drawImage( img );
+        var mouseCoords = Namer.getMouseClickCoordinates( e );
+        var rgba = Namer.getAverageRGBA( Namer.mouseDownCoordinates, mouseCoords );
+        Namer.displayRGB( rgba );
+    },
+    /**
+        Do something when the mouse is moved over the canvas
+    */
+    mouseMove: function( e ){
+        if( !Namer.mousePressed ){
+            Namer.updateColorInfo( e );
+        } else {
+            var mouseCoords = Namer.getMouseClickCoordinates( e );
+            var distBetweenCoords = Namer.distanceBetweenCoordinates( Namer.mouseDownCoordinates, mouseCoords );
+            
+            Namer.drawImage( img );
+            context.fillStyle = 'rgba(51,153,255,0.3)';
+            context.strokeStyle = 'rgb(150,205,255)';
+            context.fillRect( Namer.mouseDownCoordinates.x, Namer.mouseDownCoordinates.y,
+                                distBetweenCoords.x, distBetweenCoords.y );
+            context.strokeRect( Namer.mouseDownCoordinates.x, Namer.mouseDownCoordinates.y,
+                                distBetweenCoords.x, distBetweenCoords.y );
+        }
+    },
     
     /**
         Stop the action from occuring
@@ -465,7 +465,7 @@ var Namer = {
 };
 
 $(function() {
-	Namer.init();
+    Namer.init();
 });
 
 
