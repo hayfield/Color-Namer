@@ -1,73 +1,79 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset='utf-8'>
-
-  <title>hayfield/Color-Namer @ GitHub</title>
-
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #d439bc;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #2bc643; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #2bc643; }
-    h3 { text-align: center; color: #2bc643; }
-    a { color: #2bc643; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<script type='text/javascript' src="jquery-1.6.2.min.js"></script> 
+<script type='text/javascript' src="jquery-ui-1.8.11.draggable.min.js"></script>
+<script type='text/javascript' src="colors/xkcdtop949.js"></script>
+<script type='text/javascript' src="colors/x11colors.js"></script>
+<script type='text/javascript' src="color-namer.js"></script> 
+<link rel="stylesheet" type="text/css" href="color-namer.css"> 
+<title>Color Namer</title> 
+</head> 
 <body>
-  <a href="http://github.com/hayfield/Color-Namer"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/hayfield/Color-Namer/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/hayfield/Color-Namer/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-
-    <h1><a href="http://github.com/hayfield/Color-Namer">Color Namer</a>
-      <span class="small">by <a href="http://github.com/hayfield">hayfield</a></span></h1>
-
-    <div class="description">
-      Gives colours in images a name.
-    </div>
-
-    <p>A tool which allows you to take an image, move your mouse over a specific pixel and be given the name of the colour.</p>
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/hayfield/Color-Namer/zipball/master">zip</a> or
-      <a href="http://github.com/hayfield/Color-Namer/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/hayfield/Color-Namer</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/hayfield/Color-Namer">hayfield/Color-Namer</a>
-    </div>
-
-  </div>
-
+<!--
+Source available at: https://github.com/hayfield/Color-Namer
+<a href="http://github.com/hayfield/Color-Namer">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" />
+</a>
+-->
+  <canvas id="mainCanvas" width="500" height="500">This text is displayed if your browser does not support HTML5 Canvas.</canvas>
   
-</body>
-</html>
+  <div id="rgbBox">
+    <table id="rgbTable">
+        <tr id="redIndicator" class="colorIndicator">
+            <td id="redLetter" class="colorLetter">R:</td>
+            <td id="redBar" class="colorBar">
+                <div id="redBarVal" class="colorBarVal"></div>
+            </td>
+            <td id="redValue" class="colorValue">0</td>
+            <td rowspan="2" id="actualColor" class="colorIndicator" title="Actual Color"></td>
+        </tr>
+        <tr id="greenIndicator" class="colorIndicator">
+            <td id="greenLetter" class="colorLetter">G:</td>
+            <td id="greenBar" class="colorBar">
+                <div id="greenBarVal" class="colorBarVal"></div>
+            </td>
+            <td id="greenValue" class="colorValue">0</td>
+        </tr>
+        <tr id="blueIndicator" class="colorIndicator">
+            <td id="blueLetter" class="colorLetter">B:</td>
+            <td id="blueBar" class="colorBar">
+                <div id="blueBarVal" class="colorBarVal"></div>
+            </td>
+            <td id="blueValue" class="colorValue">0</td>
+            <td rowspan="2" id="calculatedColor" class="colorIndicator" title="Calculated Color"></td>
+        </tr>
+        <tr>
+            <td colspan="3" id="colorName"></td>
+        </tr>
+        <tr>
+            <td colspan="2" id="colorSetLabel">Colors:</td>
+            <td colspan="2" id="colorSetSelectCell">
+                <select id="colorSet">
+                    <option value="xkcdtop949">XKCD Top 949</option>
+                    <option value="x11colors">X11 Windows 144</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td id="webImageLabel">URL:</td>
+            <td colspan="3" id="webImageCell">
+                <input type="text" name="webImageURLImput" id="webImageURLInput" />
+            </td>
+        </tr>
+        <tr>
+            <!--<td colspan="2" id="fileSelectLabel">Select:</td>-->
+            <td colspan="4" id="fileSelectCell">
+                <div id="fileSelectContainer">
+                    <input type="file" id="fileSelectInput" accept="image/*" onchange="Namer.handleFiles(this.files);">
+                    <div id="fakeFileSelectButton">
+                        <button type="button" id="fileSelectButton" onclick="document.getElementById('fileSelectInput').click();">Select Image</button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+  </div>
+</body> 
+</html> 

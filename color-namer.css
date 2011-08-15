@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+}
+
+#mainCanvas {
+    
+}
+
+/* The RGB box */
+
+#rgbBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #FFFFFF;
+    z-index: 3;
+    width: 235px;
+    cursor: move;
+}
+
+#rgbTable {
+    width: 100%;
+}
+
+.colorIndicator {
+    width: 100%;
+}
+
+.colorLetter {
+    float: left;
+}
+
+.colorVal {
+    float: right;
+}
+
+.colorBar {
+    width: 50px;
+    height: 10px;
+}
+
+.colorBarVal {
+    width: 0%;
+    height:100%;
+}
+
+#redBarVal {
+    background-color: #FF0000;
+}
+
+#greenBarVal {
+    background-color: #00FF00;
+}
+
+#blueBarVal {
+    background-color: #0000FF;
+}
+
+.colorIndicator {
+    width: 30px;
+}
+
+#webImageURLInput {
+    float: right;
+}
+
+/* http://www.quirksmode.org/dom/inputfile.html */
+
+#fileSelectContainer {
+    position: relative;
+}
+
+#fileSelectInput {
+    width: 100%;
+	margin: auto;
+    position: static;
+    text-align: center;
+	z-index: 2;
+}
+
+#fakeFileSelectButton {
+    display: none;
+}
+
+#fileSelectButton {
+    width: 100%;
+    position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
