@@ -197,52 +197,11 @@ var Namer = {
     RGBToHex: function( r, g, b ){
         return Namer.toHex( r ) + Namer.toHex( g ) + Namer.toHex( b );
     },
-	
-	rgbToHsv: function( r, g, b ){
-	var hsv = {};
-	var min, max, delta;
-	
-	min = Math.min( r, g, b );
-	max = Math.max( r, g, b );
-	hsv.v = max;
-	
-	delta = max - min;
-	if( max !== 0 ){
-		hsv.s = delta / max;
-	} else {
-		// r = g = b = 0
-		hsv.s = 0;
-		hsv.h = -1;
-		return hsv;
-	}
-	
-	if( r === max ){
-		// between yellow and magenta
-		hsv.h = ( g - b ) / delta;
-	} else if ( g === max ){
-		// between cyan and yellow
-		hsv.h = 2 + ( b - r ) / delta;
-	} else {
-		// between magenta and cyan
-		hsv.h = 4 + ( r - g ) / delta;
-	}
-	
-	hsv.h *= 60;
-	if( hsv.h < 0 ){
-		hsv.h += 360;
-	}
-	hsv.r = hsv.h;
-	hsv.g = hsv.s;
-	hsv.b = hsv.v;
-	
-	return hsv;
-},
     
     /**
         Visually displays the RGB values provided
     */
     displayRGB: function( rgba ){
-		rgba = Namer.rgbToHsv( rgba.r, rgba.g, rgba.b );
         // update the RGB bars
         $('#redBarVal').width( Namer.convertToPX( rgba.r ) + 'px' );
         $('#greenBarVal').width( Namer.convertToPX( rgba.g ) + 'px' );
